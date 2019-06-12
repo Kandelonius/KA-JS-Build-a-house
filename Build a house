@@ -1,0 +1,57 @@
+/*
+ * JS KA using nested loops build a house or house like structure.
+ */
+
+background(42, 103, 196);
+var xInit = 50, yInit = 150, xScale = 300, yScale = 200;
+
+var drawClouds = function(a){//clouds
+    noStroke();
+    fill(255, 255, 255);
+    for(var j = 0; j < 450; j+= 50){
+        ellipse(j, a, random(50, 55), random(20,35));
+    }    
+};
+fill(174, 180, 214);//roof
+triangle(xInit + xScale/2, yInit - yScale/2, xInit + xScale, yInit, xInit, yInit);
+
+fill(140, 155, 95);
+rect(xInit, yInit, xScale, yScale);
+
+var drawSiding = function(thisY){
+    stroke(0,0,0);
+    if(thisY % 40 === 0){//balcony
+        for(var j = xInit; j < xInit + xScale; j += xScale/10){
+            fill(120, 80, 20);
+            rect(j, thisY, xScale/10, yScale/20);
+        }
+    }else if(thisY % 20 === 0){//window row
+        fill(125, 125, 240);
+        for(var k = xInit + xScale/20; k < xScale; k += xScale/4){
+            rect(k + xScale/20, thisY, xScale/20, yScale/20);
+        }
+    }
+};
+for(var i = 0; i < 400; i+= 5){
+    if(i < yInit/4){
+        drawClouds(i);
+    }else if(i > yInit && i < yInit + 7*yScale/8){
+        drawSiding(i);
+    }else if(i === yInit + yScale){
+        noStroke();
+        fill(73, 125, 24);
+        rect(0, i, 400, 400 - i);
+        /**/
+    }else if(i > yInit + yScale){
+        for(var j = 0; j < 400; j+= 10){
+            var tempVar = round(random(1,10));
+            if(tempVar === 10){
+                image(getImage("cute/TreeShort"), j, i,20,20);
+            }
+        }
+    }    
+}
+stroke(0,0,0);
+fill(250, 240, 75);
+rect(xInit + 9*xScale/20, yInit + 7*yScale/8, xScale/10, yScale/8);
+line(xInit + xScale/2, yInit + 7*yScale/8, xInit + xScale/2, yInit + yScale);
